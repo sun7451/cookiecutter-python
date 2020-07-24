@@ -1,21 +1,19 @@
 # cookiecutter-tendata-python
 
-## 使用步骤
+## Usage
 
-### 1. 安装 Cookiecutter
+### 1. install Cookiecutter
 
 ```shell script
 pip install cookiecutter
 ```
 
-### 2. 创建项目
+### 2. Create your project use cookiecutter
 
 ```shell script
 cookiecutter https://github.com/whg517/cookiecutter-python.git
 ```
 
-根据提示输入项目基础信息配置
-
-### 3. 开始开发
+### 3. Begin develop
 
 TODO
