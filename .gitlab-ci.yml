@@ -1,7 +1,7 @@
 image: python:3.7 # Default env
 
 .build_template: &build_template
-  stage: test
+  stage: build
   script:
     - pip install -U pip
     - pip install -U tox
