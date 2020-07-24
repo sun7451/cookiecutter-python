@@ -30,8 +30,8 @@ def _fixture_id(ctx):
 def build_files_list(root_dir):
     """Build a list containing absolute paths to the generated files."""
     return [
-        os.path.join(dirpath, file_path)
-        for dirpath, subdirs, files in os.walk(root_dir)
+        os.path.join(dir_path, file_path)
+        for dir_path, sub_dirs, files in os.walk(root_dir)
         for file_path in files
     ]
 
@@ -127,7 +127,7 @@ def test_index_server_invokes(cookies, use_pipenv, index_server, expected_result
 
 
 @pytest.mark.parametrize(
-    ["use_src_layout", "except_value"], [("y", True), ("n", False),]
+    ["use_src_layout", "except_value"], [("y", True), ("n", False)]
 )
 def test_use_src_layout_invokes(cookies, use_src_layout, except_value):
     result = cookies.bake(extra_context={"use_src_layout": use_src_layout})
@@ -138,7 +138,7 @@ def test_use_src_layout_invokes(cookies, use_src_layout, except_value):
     assert os.path.exists(os.path.join(result.project, "src")) == except_value
 
 
-@pytest.mark.parametrize(["ci_tools", "expect_value"], [("none", ""),])
+@pytest.mark.parametrize(["ci_tools", "expect_value"], [("none", "")])
 def test_ci_tools_invokes(cookies, ci_tools, expect_value):
     result = cookies.bake(extra_context={"ci_tools": ci_tools})
     assert result.exit_code == 0
