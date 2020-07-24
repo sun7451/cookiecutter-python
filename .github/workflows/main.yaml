@@ -61,4 +61,5 @@ jobs:
       - uses: actions/setup-python@v2
       - run: pip install tox
       - run: |
-          tox -e black
+          tox -e isort
+          tox -e flake8
