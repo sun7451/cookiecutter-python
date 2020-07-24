@@ -1,0 +1,44 @@
+image: python:3.7 # Default env
+
+.build_template: &build_template
+  stage: test
+  script:
+    - pip install -U pip
+    - pip install -U tox
+    - tox -e py
+
+stages:
+  - build
+  - upload
+
+# Due to gitlab ci not support matrix build. So use YAML anchors.after_script:
+# https://forum.gitlab.com/t/matrix-builds-in-ci/9629
+build:py37:
+  <<: *build_template
+  image: python:3.7
+
+build:py38:
+  <<: *build_template
+  image: python:3.8
+
+# You should set TWINE_USERNAME and TWINE_PASSWORD in gitlab ci/cd environment variables.
+# You must set TWINE_NON_INTERACTIVE is True in gitlab ci/cd environment variables to avoid the need to enter
+# a password because the pipeline card owner.
+upload to twine:
+  stage: upload
+  when: on_success
+  only:
+    refs:
+      - tags
+    variables:
+      - $TWINE_USERNAME
+      - $TWINE_PASSWORD
+  script:
+    - pip install -U pip
+    - pip install -U twine
+    - python setup.py bdist_wheel
+    - twine upload dist/*.whl
+  artifacts:
+    paths:
+      - dist/*.whl
+    expire_in: 3 days
